@@ -83,7 +83,7 @@ public class MainMenu extends JFrame {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-					FileChoose frame = FileChoose.getInstance();
+					new FileChoose();
 //					frame.setVisible(true);
 			}
 		});
