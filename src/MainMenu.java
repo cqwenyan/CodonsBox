@@ -21,6 +21,9 @@ import java.awt.Color;
 
 import javax.swing.UIManager;
 
+import function.FunctionFactory;
+import function.Operation;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -32,6 +35,7 @@ public class MainMenu extends JFrame {
 	private JTextField txtFilePath;
 	public static File inputFileName;
 	private static MainMenu frame;
+	Controller controllerInstance = Controller.getController();
 	
 	public static MainMenu getMainMenu(){
 		return frame;
@@ -50,6 +54,10 @@ public class MainMenu extends JFrame {
 				}
 			}
 		});
+
+		Operation op;
+		op = FunctionFactory.CreateOperation("GC123");
+		op.workNew();
 	}
 
 	/**
@@ -64,7 +72,7 @@ public class MainMenu extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.addItem("身份证");
 		comboBox.addItem("驾驶证");
 		comboBox.addItem("军官证");
@@ -101,6 +109,15 @@ public class MainMenu extends JFrame {
 		});
 		
 		JButton btnNewButton_1 = new JButton("Start");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				controllerInstance.setTestName("");//-------------
+				String testName=comboBox.getSelectedItem().toString();
+				controllerInstance.setTestName(testName);
+//				String s=(String)comboBox.getSelectedItem();
+			}
+		});
 		btnNewButton_1.setBackground(UIManager.getColor("Button.light"));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,7 +156,8 @@ public class MainMenu extends JFrame {
 	}
 	
 	public void setFileNameIntextfield(){
-		Controller controllerInstance = Controller.getController();
 		txtFilePath.setText(controllerInstance.getFilePath()+controllerInstance.getFileName());
 	}
+	
+	
 }

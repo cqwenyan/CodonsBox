@@ -9,6 +9,14 @@ public class Controller {
 	
 	private String filePath;
 	private String fileName;
+	private String testName=null;
+	
+	public String getTestName() {
+		return testName;
+	}
+	public void setTestName(String testName) {
+		this.testName = testName;
+	}
 	public String getFilePath(){
 		return this.filePath;
 	}
@@ -21,4 +29,6 @@ public class Controller {
 	public void setFileName(String fileName){
 		this.fileName = fileName;
 	}
+
+
 }
