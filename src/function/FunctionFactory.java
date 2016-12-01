@@ -16,6 +16,9 @@ public class FunctionFactory {
 		case "GC123":
 			oper = new GC123();
 			break;
+		case "ok":
+			oper = new OK();
+			break;
 			
 		}
 		return oper;

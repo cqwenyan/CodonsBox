@@ -1,3 +1,4 @@
+package Core;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -27,6 +28,7 @@ import function.Operation;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.awt.Font;
 
 
 public class MainMenu extends JFrame {
@@ -35,7 +37,7 @@ public class MainMenu extends JFrame {
 	private JTextField txtFilePath;
 	public static File inputFileName;
 	private static MainMenu frame;
-	Controller controllerInstance = Controller.getController();
+//	Controller controllerInstance = Controller.getController();
 	
 	public static MainMenu getMainMenu(){
 		return frame;
@@ -54,10 +56,9 @@ public class MainMenu extends JFrame {
 				}
 			}
 		});
-
-		Operation op;
-		op = FunctionFactory.CreateOperation("GC123");
-		op.workNew();
+		
+//------------------------
+		
 	}
 
 	/**
@@ -67,14 +68,14 @@ public class MainMenu extends JFrame {
 		setTitle("CodonsBox");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainMenu.class.getResource("/img/Mulberry.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(8, 100, 610, 380);
+		setBounds(8, 100, 615, 373);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		final JComboBox comboBox = new JComboBox();
-		comboBox.addItem("身份证");
-		comboBox.addItem("驾驶证");
+		comboBox.addItem("GC123");
+		comboBox.addItem("Cuter");
 		comboBox.addItem("军官证");
 		
 		
@@ -109,13 +110,19 @@ public class MainMenu extends JFrame {
 		});
 		
 		JButton btnNewButton_1 = new JButton("Start");
+		btnNewButton_1.setFont(new Font("SimSun-ExtB", Font.BOLD, 25));
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				Controller controllerInstance = Controller.getController();
 				controllerInstance.setTestName("");//-------------
 				String testName=comboBox.getSelectedItem().toString();
 				controllerInstance.setTestName(testName);
 //				String s=(String)comboBox.getSelectedItem();
+				
+				Operation op;
+				op = FunctionFactory.CreateOperation(controllerInstance.getTestName());
+				op.workNew(controllerInstance.getFilePath(),controllerInstance.getFileName());
 			}
 		});
 		btnNewButton_1.setBackground(UIManager.getColor("Button.light"));
@@ -127,35 +134,37 @@ public class MainMenu extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(39)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(39)
 							.addComponent(txtFilePath, GroupLayout.PREFERRED_SIZE, 373, GroupLayout.PREFERRED_SIZE)
 							.addGap(35)
 							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(408)
+							.addGap(48)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
+							.addGap(207)
 							.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(72)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtFilePath, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addGap(28)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(29)
-					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(68, Short.MAX_VALUE))
+					.addGap(37)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+					.addGap(128))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
 	
 	public void setFileNameIntextfield(){
+		Controller controllerInstance =Controller.getController();
 		txtFilePath.setText(controllerInstance.getFilePath()+controllerInstance.getFileName());
 	}
 	

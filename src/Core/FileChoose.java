@@ -1,11 +1,15 @@
+package Core;
 import java.awt.Toolkit;
+import java.awt.font.OpenType;
 import java.io.File;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileView;
 
 public class FileChoose extends JFrame {
 
@@ -13,19 +17,24 @@ public class FileChoose extends JFrame {
 	private static File file;
 
 	public FileChoose() {
+		final JFileChooser jfchs = new JFileChooser();
+		jfchs.setDialogType(JFileChooser.OPEN_DIALOG);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JFileChooser jfchs = new JFileChooser();
-		jfchs.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		jfchs.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		//使用操作系统对应的文件的图标
+		jfchs.setFileView(new FileView() {
+		    public Icon getIcon(File f) {
+		        return jfchs.getFileSystemView().getSystemIcon(f);
+		    }
+		});
+		
 		jfchs.showDialog(new JLabel(), "选择");
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		
 			File file = jfchs.getSelectedFile();
 			if (file != null) {
-				if (file.isDirectory()) {
-					System.out.println("文件夹:" + file.getAbsolutePath());
-				} else if (file.isFile()) {
-					System.out.println("文件:" + file.getAbsolutePath());
+				if (file.isFile()) {
 					Controller controllerInstance = Controller.getController();
 					controllerInstance.setFileName(file.getName());
 					controllerInstance.setFilePath(file.getAbsolutePath());

@@ -1,3 +1,4 @@
+package Core;
 import java.io.File;
 
 public class Controller {
@@ -21,7 +22,15 @@ public class Controller {
 		return this.filePath;
 	}
 	public void setFilePath(String filePath){
-		this.filePath = filePath;
+		if(filePath.contains("\\")){
+			this.filePath = filePath.substring(0, filePath.lastIndexOf("\\")+1);
+			System.out.println(this.filePath);
+		}else if(filePath.contains("/")){
+			this.filePath = filePath.substring(0, filePath.lastIndexOf("/")+1);
+		}else{
+			this.filePath="";
+		}
+		
 	}
 	public String getFileName(){
 		return this.fileName;
