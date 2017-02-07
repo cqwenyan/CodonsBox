@@ -16,10 +16,15 @@ public class FunctionFactory {
 		case "GC123":
 			oper = new GC123();
 			break;
-		case "ok":
-			oper = new OK();
+		case "Filter":
+			oper = new Filter();
 			break;
-			
+		case "300":
+			oper = new Longer300();
+			break;
+		case "CircosGC":
+			oper = new CircosGC();
+			break;
 		}
 		return oper;
 	}

@@ -1,4 +1,4 @@
-package Core;
+package core;
 import java.awt.Toolkit;
 import java.awt.font.OpenType;
 import java.io.File;

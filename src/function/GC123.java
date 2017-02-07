@@ -10,17 +10,21 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import Core.WorkComplete;
+import core.CleanBreak;
+import core.WorkComplete;
 
 
 public class GC123 implements Operation{
 	
+	@Override
 	public void workNew(String path,String fileName){
 		
 //		System.out.println("GC123"+path+fileName);
-		cleanLineBreak(fileName, path);
-		readFileByLines("tempFile.fasta", path);
 		
+		CleanBreak cleanBreak = new CleanBreak();
+		cleanBreak.cleanLineBreak(path, fileName);
+		readFileByLines("tempFile.fasta", path);
+		cleanBreak.deleteTempFile(path, fileName);
 		new WorkComplete();
 //		private JButton okButton;
 				
