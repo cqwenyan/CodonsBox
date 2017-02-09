@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import core.CleanBreak;
+import tool.CleanBreak;
 import core.MainMenu;
 import core.MainMenu.PulsType;
 import core.WorkComplete;
@@ -17,10 +17,9 @@ public class CircosGC implements Operation {
 	@Override
 	public void workNew(String path, String fileName) {
 		// TODO Auto-generated method stub
-		MainMenu.RefreshPlus(PulsType.CircosGC);
+		MainMenu.RefreshPlus(PulsType.CircosGCtype);
 
 		if(!MainMenu.getPlusfield().equals("0")){
-			System.out.println(MainMenu.getPlusfield()+"1");
 //		CleanBreak cleanBreak = new CleanBreak();
 //		cleanBreak.cleanLineBreak(path, fileName);
 			genIterator(path+fileName, Integer.parseInt(MainMenu.getPlusfield()),"CodonsBoxGC");

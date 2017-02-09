@@ -15,8 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-
-
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -46,7 +44,7 @@ public class MainMenu extends JFrame {
 	private static JTextField txtA;
 	private static JPanel panel_1;
 	private static JLabel lblNewLabel;
-	public static enum PulsType{No,CircosGC,AA};
+	public static enum PulsType{No,CircosGCtype,SynonymCodonShuffleType,KLD_PvalueTpye, KLDtype, CodonShuffleType, SVMLibType};
 	public static PulsType testType = PulsType.No;
 //	Controller controllerInstance = Controller.getController();
 	
@@ -85,10 +83,18 @@ public class MainMenu extends JFrame {
 		setContentPane(contentPane);
 		
 		final JComboBox comboBox = new JComboBox();
-		comboBox.addItem("GC123");
+//		comboBox.addItem("GC123");
+		comboBox.addItem("Filter");
+		comboBox.addItem("300");
+		comboBox.addItem("Codon shuffle");
+		comboBox.addItem("Synonym codon shuffle");
+		comboBox.addItem("KLD");
+		comboBox.addItem("KLD_Pvalue");
+		comboBox.addItem("PR2 Plot");
+		comboBox.addItem("Neutrality plot");
 		comboBox.addItem("CircosGC");
-		comboBox.addItem("AA");
-		
+		comboBox.addItem("SVMData");
+//		comboBox.addItem("ENC plot");
 		
 		txtFilePath = new JTextField();
 		txtFilePath.addMouseListener(new MouseAdapter() {
@@ -147,16 +153,18 @@ public class MainMenu extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(39)
+					.addGap(33)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtFilePath, GroupLayout.PREFERRED_SIZE, 373, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(35)
 							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-						.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -168,11 +176,11 @@ public class MainMenu extends JFrame {
 						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 					.addGap(37)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(31)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 					.addGap(48))
 		);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
@@ -185,7 +193,7 @@ public class MainMenu extends JFrame {
 		panel_1.setLayout(null);
 		
 		lblNewLabel = new JLabel("片段大小(bp)");
-		lblNewLabel.setFont(new Font("宋体", Font.BOLD, 15));
+		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 12));
 		lblNewLabel.setEnabled(false);
 		lblNewLabel.setBounds(14, 13, 317, 27);
 		panel_1.add(lblNewLabel);
@@ -201,13 +209,28 @@ public class MainMenu extends JFrame {
 	//刷新plus区域
 	public static void RefreshPlus(PulsType pulsType){
 		switch (pulsType) {
-		case CircosGC:
+		case CircosGCtype:
 			panel_1.setVisible(true);
-			
 			break;
-		case AA:
+		case SynonymCodonShuffleType:
+			lblNewLabel.setText("每种氨基酸对应同义密码子的交换次数");
 			panel_1.setVisible(true);
-			lblNewLabel.setText("请输入A");
+			break;
+		case KLD_PvalueTpye:
+			lblNewLabel.setText("片段大小=片段数量=同义密码子空模型个数(如:10=5=100)");
+			panel_1.setVisible(true);
+			break;
+		case KLDtype:
+			lblNewLabel.setText("片段大小=片段数量");
+			panel_1.setVisible(true);
+			break;
+		case CodonShuffleType:
+			lblNewLabel.setText("每种氨基酸对应同义密码子的交换次数");
+			panel_1.setVisible(true);
+			break;
+		case SVMLibType:
+			lblNewLabel.setText("数据类型");
+			panel_1.setVisible(true);
 			break;
 		default:
 			break;

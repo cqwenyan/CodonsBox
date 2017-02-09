@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import core.CleanBreak;
+import tool.CleanBreak;
 import core.WorkComplete;
 
 
@@ -24,7 +24,7 @@ public class GC123 implements Operation{
 		CleanBreak cleanBreak = new CleanBreak();
 		cleanBreak.cleanLineBreak(path, fileName);
 		readFileByLines("tempFile.fasta", path);
-		cleanBreak.deleteTempFile(path, fileName);
+		cleanBreak.deleteTempFile(path);
 		new WorkComplete();
 //		private JButton okButton;
 				

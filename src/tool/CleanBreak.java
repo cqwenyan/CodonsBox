@@ -1,4 +1,4 @@
-package core;
+package tool;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,8 +40,8 @@ public class CleanBreak {
 		}
 	}
 	
-	public static void deleteTempFile(String inputFileName, String path){
-		File file = new File(path + inputFileName);
+	public static void deleteTempFile(String path){
+		File file = new File(path + "tempFile.fasta");
 		if(file.exists()){
 			file.delete();
 		}
