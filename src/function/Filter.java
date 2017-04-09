@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Set;
-
 import tool.CleanBreak;
 import core.WorkComplete;
 
@@ -19,12 +17,12 @@ public class Filter implements Operation {
 		CleanBreak cleanBreak = new CleanBreak();
 		cleanBreak.cleanLineBreak(path, fileName);
 		TheFilter(path,fileName);
+		cleanBreak.deleteTempFile(path);
 		new WorkComplete();
 	}
 	public void TheFilter(String path, String fileName){
 		File file = new File(path+"tempFile.fasta");
-		File writeTo = new File(
-				(path+fileName).substring(0, (path+fileName).indexOf("."))+"_Filter.fasta");
+		File writeTo = new File(path+"Filter_"+fileName);
 		String tempString = null;
 		String tempStore = null;
 		try {
@@ -34,7 +32,6 @@ public class Filter implements Operation {
 			while ((tempString = reader.readLine()) != null) {
 				if(tempString.contains(">")){
 					tempStore = tempString;
-//					System.out.println(tempStore);
 				}else{
 					String cleanTempString = tempString.trim();
 					int TempStringLenth = cleanTempString.length();
@@ -56,25 +53,7 @@ public class Filter implements Operation {
 						}
 					}
 				}
-//				tempStringUpper = reader.readLine();
 			}
-			boolean isOutput = false;
-//			while ((tempStringR = readerR.readLine()) != null) {
-//				if(tempString.contains(">")){
-//					 for(int i=0;i<resultList.size(); i++){
-//						 if((tempString.trim()).equals(resultList.get(i).trim())){
-//							 isOutput = true;
-//							 bw.write(tempString);
-//						 }else{
-//							 isOutput = false;
-//						 }
-//					 }
-//				}else{
-//					if(isOutput){
-//						bw.write("\n"+tempString);
-//					}
-//				}
-//			}
 			reader.close();
 			bw.flush();
 			bw.close();

@@ -16,28 +16,23 @@ public class NeutralityPlot implements Operation {
 	public void workNew(String path, String fileName) {
 		CleanBreak cleanBreak = new CleanBreak();
 		cleanBreak.cleanLineBreak(path, fileName);
-		NeutralityFactory("tempFile.fasta",path);
+		NeutralityFactory(fileName,path);
 		cleanBreak.deleteTempFile(path);
 		new WorkComplete();
-
 	}
 	public static void NeutralityFactory(String inputfileName,String path) {
-		File file = new File(path+inputfileName);
+		File file = new File(path+"tempFile.fasta");
 		BufferedReader reader = null;
 
 		BufferedWriter bw3 = null;
 		try {
 			String tempString = null;
-			
-			FileWriter writergc3 = new FileWriter(path+"PR2bias.fasta", true);
+			FileWriter writergc3 = new FileWriter(path+"NeutralityPlot_"+inputfileName, true);
 			bw3 = new BufferedWriter(writergc3);
-			//题目
 			bw3.write("geneID\tGC12\tGC3\n");
 			reader = new BufferedReader(new FileReader(file));
 			while ((tempString = reader.readLine()) != null) {
-			
 				if (tempString.contains(">")) {
-					
 					bw3.write(tempString + "\t");
 				} else {
 					int gc3 = 0;
@@ -45,7 +40,6 @@ public class NeutralityPlot implements Operation {
 					int oneTwoPostiNumber = 0;
 					int threePostiNumber = 0;
 					int length = tempString.length() / 3;
-					
 					for (int j = 0; j < length; j++) {
 						String tempCodon = tempString.substring(3 * j,
 								3 * j + 3).toUpperCase();
@@ -82,7 +76,7 @@ public class NeutralityPlot implements Operation {
 					bw3.write(String.valueOf(((float)gc12)/(oneTwoPostiNumber*2))+"\t"+String.valueOf(((float)gc3)/threePostiNumber)+"\n");
 				}
 			}
-
+			bw3.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

@@ -1,18 +1,18 @@
 package core;
-import java.awt.Toolkit;
-import java.awt.font.OpenType;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileView;
 
 public class FileChoose extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// private JPanel contentPane;
 	private static File file;
 

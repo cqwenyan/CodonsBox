@@ -17,14 +17,13 @@ public class SynonymCodonShuffle implements Operation {
 
 	@Override
 	public void workNew(String path, String fileName) {
-		// TODO Auto-generated method stub
 		MainMenu.RefreshPlus(PulsType.SynonymCodonShuffleType);
 
 		int lineLength = cleanLineBreak(path, fileName);
 		if (!MainMenu.getPlusfield().equals("0")) {
 			int shuffleTimes = Integer.valueOf(MainMenu.getPlusfield());
-			genIterator(path + "tempFile.fasta", path + fileName
-					+ "_random.fasta", lineLength,shuffleTimes);
+			genIterator(path + "tempFile.fasta", path + "SynShuff_"+fileName
+					, lineLength,shuffleTimes);
 
 			File f = new File(path + "tempFile.fasta"); // 输入要删除的文件位置
 			if (f.exists())
@@ -64,8 +63,6 @@ public class SynonymCodonShuffle implements Operation {
 								* lineLength, genLength)
 								+ "\n");
 					}
-
-					// bw.write(genAfterRandom + "\n");
 				}
 			}
 			bw.flush();
@@ -79,7 +76,6 @@ public class SynonymCodonShuffle implements Operation {
 	public static String core(String inputSequence,int shuffleTimes) {
 		StringToArray myStringToArray = new StringToArray();
 		RandomizeDiArray myRandomizeDiArray = new RandomizeDiArray();
-		// String inputSequence = "CGTTTATTATTACGCAGA";
 		// 一条基因生成一个密码子数组
 		String[] mygenArrays = myStringToArray.genArrays(inputSequence);
 		// 将该密码子数组放入到固定顺序的二维数组
@@ -101,8 +97,6 @@ public class SynonymCodonShuffle implements Operation {
 			BufferedWriter bw = new BufferedWriter(rwriter);
 			String tempStringUpper = null;
 			BufferedReader reader = new BufferedReader(new FileReader(file));
-
-			// find the first line contain ">".
 			tempStringUpper = reader.readLine();
 			while (tempStringUpper.contains(">") != true) {
 				tempStringUpper = reader.readLine();

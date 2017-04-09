@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import tool.CleanBreak;
 import core.MainMenu;
 import core.MainMenu.PulsType;
 import core.WorkComplete;
@@ -16,26 +15,24 @@ public class CircosGC implements Operation {
 
 	@Override
 	public void workNew(String path, String fileName) {
-		// TODO Auto-generated method stub
 		MainMenu.RefreshPlus(PulsType.CircosGCtype);
 
 		if(!MainMenu.getPlusfield().equals("0")){
 //		CleanBreak cleanBreak = new CleanBreak();
 //		cleanBreak.cleanLineBreak(path, fileName);
-			genIterator(path+fileName, Integer.parseInt(MainMenu.getPlusfield()),"CodonsBoxGC");
+			genIterator(path,fileName, Integer.parseInt(MainMenu.getPlusfield()),"CodonsBoxGC");
 //		cleanBreak.deleteTempFile(path, fileName);
 			new WorkComplete();
 			
 		}
 	}
 
-	public static void genIterator(String inputFileName,  int frameSize,String chromosomeName) {
+	public static void genIterator(String path,String inputFileName,  int frameSize,String chromosomeName) {
 		try {
 			File writeTo = new File(
-					inputFileName+"_result.fasta");
+					path+"GenomeGCcircos_"+inputFileName);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(writeTo, true));
 			String tempString = null;
-//			StringBuffer stringBuf = new StringBuffer();
 			StringBuilder stringBud = new StringBuilder();
 			
 

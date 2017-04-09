@@ -13,9 +13,6 @@ public class FunctionFactory {
 	public static Operation CreateOperation(String operation){
 		Operation oper = null;
 		switch(operation){
-		case "GC123":
-			oper = new GC123();
-			break;
 		case "Filter":
 			oper = new Filter();
 			break;

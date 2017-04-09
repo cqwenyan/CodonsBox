@@ -1,5 +1,4 @@
 package core;
-import java.io.File;
 
 public class Controller {
 	private Controller(){}

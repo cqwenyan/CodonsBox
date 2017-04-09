@@ -97,33 +97,28 @@ public static Map<String, String> synAminoAcidBox() {
 
 	@Override
 	public void workNew(String path, String fileName) {
-		// TODO Auto-generated method stub
 		MainMenu.RefreshPlus(PulsType.KLDtype);
 		if(!MainMenu.getPlusfield().equals("0")){
-			String []tempKLD = MainMenu.getPlusfield().split("="); 
+			String []tempKLD = MainMenu.getPlusfield().split(" "); 
 			CleanBreak cleanBreak = new CleanBreak();
 			cleanBreak.cleanLineBreak(path, fileName);
-			KLD_Builder(Integer.valueOf(tempKLD[0]), Integer.valueOf(tempKLD[1]),path,"tempFile.fasta");
+			KLD_Builder(Integer.valueOf(tempKLD[0]), Integer.valueOf(tempKLD[1]),path,fileName);
 			cleanBreak.deleteTempFile(path);
 		}
 	}
 
 	private static void KLD_Builder(int binSize, int binNumber,String path,String inputFileName){
 		double[] totalCodonF = coreKLDPartB(synAminoAcidBox(), path);
-		double[][] codonF = coreKLDPartA(binSize, binNumber,synAminoAcidBox(), path, inputFileName);
+		double[][] codonF = coreKLDPartA(binSize, binNumber,synAminoAcidBox(), path, "tempFile.fasta");
 		
 		FileWriter writer;
 		try {
-			writer = new FileWriter(path+"KLD.fasta");
+			writer = new FileWriter(path+"KLD_"+inputFileName);
 			BufferedWriter bw = new BufferedWriter(writer);
 			for (int j = 0; j < Code_table.length; j++) {
 				for (int i = 0; i < binNumber; i++) {
-//					System.out.println("codonF[j][i]"+codonF[j][i]);
-//					System.out.println("totalCodonF[j]"+totalCodonF[j]);
 					double partAB = Math.pow(codonF[j][i] / totalCodonF[j], 1000*codonF[j][i]);
-//					System.out.println("partAB"+partAB);
 					double x = Math.log(partAB);
-//					System.out.println("x"+x);
 					bw.write(new BigDecimal(Double.toString(x)).setScale(3,BigDecimal.ROUND_HALF_UP).toString()+"\t");
 				}
 				bw.write("\n");
@@ -137,8 +132,6 @@ public static Map<String, String> synAminoAcidBox() {
 	
 	private static double[][] coreKLDPartA(int binSize, int binNumber,
 			Map<String, String> synAminoAcidTable,String path,String inputFileName) {
-		int theCodonCounter = 0;
-		int synCodonCounter = 0;
 		int[][] countCodon = new int [59][binNumber];
 		int[][] countAA = new int [19][binNumber];
 		double[][] partA = new double [59][binNumber];
@@ -186,8 +179,6 @@ public static Map<String, String> synAminoAcidBox() {
 					}
 				}
 			}
-		
-//		partA = (((double) theCodonCounter) / synCodonCounter);
 		return partA;
 	}
 
@@ -195,8 +186,6 @@ public static Map<String, String> synAminoAcidBox() {
 	private static double[] coreKLDPartB(Map<String, String> synAminoAcidTable, String path) {
 		int[] countCodon = new int[59];
 		int[] countAA = new int [19];
-		int oneGenomeCodon = 0;
-		int synOneGenomeCodon = 0;
 		double[] partB = new double [59];
 
 		BufferedReader reader = null;
@@ -241,9 +230,6 @@ public static Map<String, String> synAminoAcidBox() {
 				}
 			}
 		}
-//		System.out.println("+++" + codon + "oneGenomeCodon:" + oneGenomeCodon);
-//		System.out.println("+++" + codon + "synOneGenomeCodon:"
-//				+ synOneGenomeCodon);
 		return partB;
 	}
 }

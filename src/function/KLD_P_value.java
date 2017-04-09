@@ -102,7 +102,7 @@ public class KLD_P_value implements Operation {
 	public void workNew(String path, String fileName) {
 		MainMenu.RefreshPlus(PulsType.KLD_PvalueTpye);
 		if (!MainMenu.getPlusfield().equals("0")) {
-			String [] kldtemp =MainMenu.getPlusfield().trim().split("=");
+			String [] kldtemp =MainMenu.getPlusfield().trim().split(" ");
 			noSpaceTempFile(fileName, path);
 			int binSize = Integer.valueOf(kldtemp[0]);
 			int binNumber = Integer.valueOf(kldtemp[1]);
@@ -124,17 +124,13 @@ public class KLD_P_value implements Operation {
 			if (isOutputFile) {
 				FileWriter writer;
 				try {
-					writer = new FileWriter(path + "KLD.fasta");
+					writer = new FileWriter(path + "KLD.kld");
 					BufferedWriter bw = new BufferedWriter(writer);
 					for (int j = 0; j < Code_table.length; j++) {
 						for (int i = 0; i < binNumber; i++) {
-							// System.out.println("codonF[j][i]"+codonF[j][i]);
-							// System.out.println("totalCodonF[j]"+totalCodonF[j]);
 							double partAB = Math.pow(codonF[j][i] / totalCodonF[j],
 									1000 * codonF[j][i]);
-							// System.out.println("partAB"+partAB);
 							double x = Math.log(partAB);
-							// System.out.println("x"+x);
 							result[j][i] = new BigDecimal(Double.toString(x))
 									.setScale(3, BigDecimal.ROUND_HALF_UP);
 							bw.write(result[j][i].toString() + "\t");
@@ -150,13 +146,9 @@ public class KLD_P_value implements Operation {
 			} else {
 				for (int j = 0; j < Code_table.length; j++) {
 					for (int i = 0; i < binNumber; i++) {
-						// System.out.println("codonF[j][i]"+codonF[j][i]);
-						// System.out.println("totalCodonF[j]"+totalCodonF[j]);
 						double partAB = Math.pow(codonF[j][i] / totalCodonF[j],
 								1000 * codonF[j][i]);
-						// System.out.println("partAB"+partAB);
 						double x = Math.log(partAB);
-						// System.out.println("x"+x);
 						result[j][i] = new BigDecimal(Double.toString(x)).setScale(
 								3, BigDecimal.ROUND_HALF_UP);
 					}
@@ -169,11 +161,10 @@ public class KLD_P_value implements Operation {
 
 		private static void KLD_Pvalue(int binSize, int binNumber, String path,
 				String inputFileName, int repeat) {
-			KLDRandoms myRandoms = new KLDRandoms();
 
 			BigDecimal[][] kldResult = KLD_Builder(binSize, binNumber, path,
 					"tempNoSpace.fasta", true);
-			int lineLength = myRandoms.cleanLineBreak(path, inputFileName);
+			int lineLength = KLDRandoms.cleanLineBreak(path, inputFileName);
 			float[][] pValue = new float[Code_table.length][binNumber];
 			for (int i = 0; i < repeat; i++) {
 
@@ -181,7 +172,7 @@ public class KLD_P_value implements Operation {
 				if (f.exists())
 					f.delete();
 
-				myRandoms.genIterator(path + "tempFile.fasta", path + "random_"
+				KLDRandoms.genIterator(path + "tempFile.fasta", path + "random_"
 						+ inputFileName, lineLength);
 
 				BigDecimal[][] tempKldResult = KLD_Builder(binSize, binNumber,
@@ -192,12 +183,6 @@ public class KLD_P_value implements Operation {
 								.abs().doubleValue()) {
 							pValue[j][k]++;
 						}
-						// System.out.println("kldResult[j][k].abs().doubleValue()"
-						// + kldResult[j][k].abs().doubleValue());
-						// System.out
-						// .println("tempKldResult[j][k].abs().doubleValue()"
-						// + tempKldResult[j][k].abs().doubleValue());
-						// System.out.println("pValue[j][k]:"+pValue[j][k]+" j: "+j+" k:"+k);
 					}
 				}
 			}
@@ -205,13 +190,12 @@ public class KLD_P_value implements Operation {
 			// 输出结果
 			FileWriter writer;
 			try {
-				writer = new FileWriter(path + "KLD_PValue.fasta");
+				writer = new FileWriter(path + "KLD_PValue.kld");
 				BufferedWriter bw = new BufferedWriter(writer);
 
 				for (int j = 0; j < Code_table.length; j++) {
 					for (int k = 0; k < binNumber; k++) {
 						pValue[j][k] /= (float) repeat;
-						// System.out.println("pValue[j][k]:"+pValue[j][k]);
 						bw.write(String.valueOf(pValue[j][k]) + "\t");
 					}
 					bw.write("\n");
@@ -255,8 +239,6 @@ public class KLD_P_value implements Operation {
 		private static double[][] coreKLDPartA(int binSize, int binNumber,
 				Map<String, String> synAminoAcidTable, String path,
 				String inputFileName) {
-			int theCodonCounter = 0;
-			int synCodonCounter = 0;
 			int[][] countCodon = new int[59][binNumber];
 			int[][] countAA = new int[19][binNumber];
 			double[][] partA = new double[59][binNumber];
@@ -311,7 +293,6 @@ public class KLD_P_value implements Operation {
 				}
 			}
 
-			// partA = (((double) theCodonCounter) / synCodonCounter);
 			return partA;
 		}
 
@@ -320,8 +301,6 @@ public class KLD_P_value implements Operation {
 				String path) {
 			int[] countCodon = new int[59];
 			int[] countAA = new int[19];
-			int oneGenomeCodon = 0;
-			int synOneGenomeCodon = 0;
 			double[] partB = new double[59];
 
 			BufferedReader reader = null;
@@ -368,10 +347,6 @@ public class KLD_P_value implements Operation {
 					}
 				}
 			}
-			// System.out.println("+++" + codon + "oneGenomeCodon:" +
-			// oneGenomeCodon);
-			// System.out.println("+++" + codon + "synOneGenomeCodon:"
-			// + synOneGenomeCodon);
 			return partB;
 		}
 
