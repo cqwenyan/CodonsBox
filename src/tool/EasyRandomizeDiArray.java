@@ -2,11 +2,9 @@ package tool;
 
 import java.util.Random;
 
-//未测试密码子数量
 public class EasyRandomizeDiArray {
 
-	// 是否用static
-	public String[] theShuffle(String[] twoDiArray,int RandomTimes) {
+	public String[] theShuffle(String[] twoDiArray, int RandomTimes) {
 
 		int counter = 0;
 		Random random = new Random();
@@ -15,7 +13,7 @@ public class EasyRandomizeDiArray {
 				counter++;
 				exchange(random.nextInt(twoDiArray.length - 2) + 1, j,
 						twoDiArray);
-				if(RandomTimes==counter){
+				if (RandomTimes == counter) {
 					break;
 				}
 			}
@@ -28,5 +26,4 @@ public class EasyRandomizeDiArray {
 		twoDiArray[p1] = twoDiArray[p2];
 		twoDiArray[p2] = temp;
 	}
-
 }

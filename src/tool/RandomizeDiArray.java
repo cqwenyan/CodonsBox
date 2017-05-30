@@ -4,40 +4,32 @@ import java.util.Random;
 
 public class RandomizeDiArray {
 
-	// 是否用static，twoDiArray[从1开始氨基酸][第几个该AA]=所在位置，twoDiArray[0][位置] = 氨基酸种类;
-	public int[][] theShuffle(int[][] twoDiArray,int ShuffleTimes) {
+	public int[][] theShuffle(int[][] twoDiArray, int ShuffleTimes) {
 		for (int i = 1; i < 19; i++) {
 			int tempLength = twoDiArray[i].length;
 			Random random = new Random();
 			int counter = 0;
-//			System.out.println("twoDiArray[i].length"+twoDiArray[i].length+"  "+" i: "+i);
-			if(0 ==tempLength){
+			if (0 == tempLength) {
 				continue;
 			}
 			while (counter <= ShuffleTimes) {
-//				int temp = twoDiArray[i].length;
 				for (int j = 0; j < tempLength; j++) {
 					counter++;
-//					int temp2 = random.nextInt(twoDiArray[i].length);
-					exchange(random.nextInt(tempLength), j,
-							twoDiArray,i);
-//					if(100000==counter){
-//						break;
-//					}
+					exchange(random.nextInt(tempLength), j, twoDiArray, i);
 				}
 			}
 		}
 		return twoDiArray;
 	}
 
-	private void exchange(int p1, int p2, int[][] twoDiArray,int i) {
+	private void exchange(int p1, int p2, int[][] twoDiArray, int i) {
 		int temp = twoDiArray[i][p1];
 		twoDiArray[i][p1] = twoDiArray[i][p2];
-		twoDiArray[i][p2] = temp; 
+		twoDiArray[i][p2] = temp;
 	}
-	
+
 	public String theShuffleOutput(int[][] twoDiArray, String[] genArray) {
-		//按照输入序列的codon长度生成一个存放数组，用于存放顺序
+		// 按照输入序列的codon长度生成一个存放数组，用于存放顺序
 		int[] resultInt = new int[genArray.length];
 
 		int PhePin = 0;
@@ -60,10 +52,10 @@ public class RandomizeDiArray {
 		int GlyPin = 0;
 
 		for (int i = 0; i < genArray.length; i++) {
-			//原始序列的氨基酸顺序
+			// 原始序列的氨基酸顺序
 			switch (twoDiArray[0][i]) {
 			case 1:
-				//将洗牌后的第一个该氨基酸位置赋给结果数组
+				// 将洗牌后的第一个该氨基酸位置赋给结果数组
 				resultInt[i] = twoDiArray[1][PhePin];
 				PhePin++;
 				break;
@@ -141,10 +133,10 @@ public class RandomizeDiArray {
 		}
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < genArray.length; i++) {
-			if(resultInt[i] == 0){
+			if (resultInt[i] == 0) {
 				result.append(genArray[i]);
-			}else{
-			result.append(genArray[resultInt[i]]);
+			} else {
+				result.append(genArray[resultInt[i]]);
 			}
 		}
 		return result.toString();

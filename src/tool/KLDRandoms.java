@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
-
 public class KLDRandoms {
 
 	public static void genIterator(String inputFileName, String outputFileName,
@@ -17,13 +15,11 @@ public class KLDRandoms {
 		try {
 			FileWriter writer = new FileWriter(outputFileName);
 			BufferedWriter bw = new BufferedWriter(writer);
-
 			String geneName = null;
-
 			File file = new File(inputFileName);
 			BufferedReader reader = new BufferedReader(new FileReader(file));
-
 			int counter = 0;
+			
 			while ((geneName = reader.readLine()) != null) {
 				if (!geneName.contains(">")) {
 					bw.write(core(geneName));
@@ -34,7 +30,6 @@ public class KLDRandoms {
 				}
 				counter++;
 			}
-
 			bw.flush();
 			reader.close();
 			bw.close();
@@ -95,5 +90,4 @@ public class KLDRandoms {
 		}
 		return lineLength;
 	}
-
 }

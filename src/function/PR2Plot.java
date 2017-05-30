@@ -15,19 +15,21 @@ public class PR2Plot implements Operation {
 	public void workNew(String path, String fileName) {
 		CleanBreak cleanBreak = new CleanBreak();
 		cleanBreak.cleanLineBreak(path, fileName);
-		PR2PlotFactory(fileName,path);
+		PR2PlotFactory(fileName, path);
 		cleanBreak.deleteTempFile(path);
-			new WorkComplete();
+		new WorkComplete();
 	}
-	public static void PR2PlotFactory(String inputfileName,String path) {
-		File file = new File(path+"tempFile.fasta");
+
+	public static void PR2PlotFactory(String inputfileName, String path) {
+		File file = new File(path + "tempFile.fasta");
 		BufferedReader reader = null;
 		BufferedWriter bw3 = null;
 		try {
 			String tempString = null;
-			FileWriter writergc3 = new FileWriter(path+"PR2_"+inputfileName, true);
+			FileWriter writergc3 = new FileWriter(
+					path + "PR2_" + inputfileName, true);
 			bw3 = new BufferedWriter(writergc3);
-			//题目
+			// 题目
 			bw3.write("geneID\t[G3/(G3+C3)]\t[A3/(A3+U3)]\n");
 			reader = new BufferedReader(new FileReader(file));
 			while ((tempString = reader.readLine()) != null) {
@@ -42,18 +44,19 @@ public class PR2Plot implements Operation {
 					for (int j = 0; j < length; j++) {
 						String tempCodon = tempString.substring(3 * j,
 								3 * j + 3);
-							if ("C".equals(tempCodon.substring(2, 3))){
-								c3++;
-							}else if("G".equals(tempCodon.substring(2, 3))){
-								g3++;
-							}else if("A".equals(tempCodon.substring(2, 3))){
-								a3++;
-							}else if("T".equals(tempCodon.substring(2, 3))){
-								t3++;
-							}
+						if ("C".equals(tempCodon.substring(2, 3))) {
+							c3++;
+						} else if ("G".equals(tempCodon.substring(2, 3))) {
+							g3++;
+						} else if ("A".equals(tempCodon.substring(2, 3))) {
+							a3++;
+						} else if ("T".equals(tempCodon.substring(2, 3))) {
+							t3++;
+						}
 					}
-					//[G3/(G3+C3)]为x坐标，[A3/(A3+U3)] 为y坐标
-					bw3.write(String.valueOf((float)g3/(g3+c3))+"\t"+String.valueOf((float)a3/(a3+t3))+"\n");
+					// [G3/(G3+C3)]为x坐标，[A3/(A3+U3)] 为y坐标
+					bw3.write(String.valueOf((float) g3 / (g3 + c3)) + "\t"
+							+ String.valueOf((float) a3 / (a3 + t3)) + "\n");
 				}
 			}
 			bw3.flush();

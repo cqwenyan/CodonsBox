@@ -7,8 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CleanBreak implements ICleanBreak{
-	
+public class CleanBreak implements ICleanBreak {
+	private int lineLenght = -1;
+
 	@Override
 	public void cleanLineBreak(String path, String inputFileName) {
 		File file = new File(path + inputFileName);
@@ -26,6 +27,8 @@ public class CleanBreak implements ICleanBreak{
 				if (tempString.contains(">")) {
 					bw.write("\n" + tempString.toUpperCase() + "\n");
 				} else {
+					if (lineLenght == -1)
+						lineLenght = tempString.length();
 					bw.write(tempString.toUpperCase());
 				}
 			}
@@ -35,17 +38,23 @@ public class CleanBreak implements ICleanBreak{
 		} finally {
 			try {
 				bw.close();
+				rwriter.close();
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
+	// get the line length
+	public int GetLineLength() {
+		return lineLenght;
+	}
+
 	@Override
-	public void deleteTempFile(String path){
+	public void deleteTempFile(String path) {
 		File file = new File(path + "tempFile.fasta");
-		if(file.exists()){
+		if (file.exists()) {
 			file.delete();
 		}
 	}

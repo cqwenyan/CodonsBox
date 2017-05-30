@@ -9,19 +9,13 @@ public class KLDRandomizeDiArray {
 			int tempLength = twoDiArray[i].length;
 			Random random = new Random();
 			int counter = 0;
-			// System.out.println("twoDiArray[i].length"+twoDiArray[i].length+"  "+" i: "+i);
 			if (0 == tempLength) {
 				continue;
 			}
 			while (counter <= 10000) {
-				// int temp = twoDiArray[i].length;
 				for (int j = 0; j < tempLength; j++) {
 					counter++;
-					// int temp2 = random.nextInt(twoDiArray[i].length);
 					exchange(random.nextInt(tempLength), j, twoDiArray, i);
-					// if(100000==counter){
-					// break;
-					// }
 				}
 			}
 		}

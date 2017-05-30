@@ -16,18 +16,20 @@ public class NeutralityPlot implements Operation {
 	public void workNew(String path, String fileName) {
 		CleanBreak cleanBreak = new CleanBreak();
 		cleanBreak.cleanLineBreak(path, fileName);
-		NeutralityFactory(fileName,path);
+		NeutralityFactory(fileName, path);
 		cleanBreak.deleteTempFile(path);
 		new WorkComplete();
 	}
-	public static void NeutralityFactory(String inputfileName,String path) {
-		File file = new File(path+"tempFile.fasta");
+
+	public static void NeutralityFactory(String inputfileName, String path) {
+		File file = new File(path + "tempFile.fasta");
 		BufferedReader reader = null;
 
 		BufferedWriter bw3 = null;
 		try {
 			String tempString = null;
-			FileWriter writergc3 = new FileWriter(path+"NeutralityPlot_"+inputfileName, true);
+			FileWriter writergc3 = new FileWriter(path + "NeutralityPlot_"
+					+ inputfileName, true);
 			bw3 = new BufferedWriter(writergc3);
 			bw3.write("geneID\tGC12\tGC3\n");
 			reader = new BufferedReader(new FileReader(file));
@@ -43,37 +45,49 @@ public class NeutralityPlot implements Operation {
 					for (int j = 0; j < length; j++) {
 						String tempCodon = tempString.substring(3 * j,
 								3 * j + 3).toUpperCase();
-						if ((!"ATG".equals(tempCodon))&&(!"TGG".equals(tempCodon))&&
-								(!"AUG".equals(tempCodon))&&(!"UGG".equals(tempCodon))){
+						if ((!"ATG".equals(tempCodon))
+								&& (!"TGG".equals(tempCodon))
+								&& (!"AUG".equals(tempCodon))
+								&& (!"UGG".equals(tempCodon))) {
 							oneTwoPostiNumber++;
 							String oneTemp = tempCodon.substring(0, 1);
 							String twoTemp = tempCodon.substring(1, 2);
-							if ("C".equals(oneTemp)){
+							if ("C".equals(oneTemp)) {
 								gc12++;
-							}else if("G".equals(oneTemp)){
+							} else if ("G".equals(oneTemp)) {
 								gc12++;
-							}else if("C".equals(twoTemp)){
+							} else if ("C".equals(twoTemp)) {
 								gc12++;
-							}else if("G".equals(twoTemp)){
+							} else if ("G".equals(twoTemp)) {
 								gc12++;
 							}
-							if((!"TAA".equals(tempCodon))&&(!"UAA".equals(tempCodon))&&
-									(!"TAG".equals(tempCodon))&&(!"UAG".equals(tempCodon))&&
-									(!"TGA".equals(tempCodon))&&(!"UGA".equals(tempCodon))&&
-									(!"ATT".equals(tempCodon))&&(!"AUU".equals(tempCodon))&&
-									(!"ATC".equals(tempCodon))&&(!"AUC".equals(tempCodon))&&
-									(!"ATA".equals(tempCodon))&&(!"AUA".equals(tempCodon))){
+							if ((!"TAA".equals(tempCodon))
+									&& (!"UAA".equals(tempCodon))
+									&& (!"TAG".equals(tempCodon))
+									&& (!"UAG".equals(tempCodon))
+									&& (!"TGA".equals(tempCodon))
+									&& (!"UGA".equals(tempCodon))
+									&& (!"ATT".equals(tempCodon))
+									&& (!"AUU".equals(tempCodon))
+									&& (!"ATC".equals(tempCodon))
+									&& (!"AUC".equals(tempCodon))
+									&& (!"ATA".equals(tempCodon))
+									&& (!"AUA".equals(tempCodon))) {
 								threePostiNumber++;
 								String threeTemp = tempCodon.substring(2, 3);
-								if ("C".equals(threeTemp)){
+								if ("C".equals(threeTemp)) {
 									gc3++;
-								}else if("G".equals(threeTemp)){
+								} else if ("G".equals(threeTemp)) {
 									gc3++;
 								}
 							}
 						}
 					}
-					bw3.write(String.valueOf(((float)gc12)/(oneTwoPostiNumber*2))+"\t"+String.valueOf(((float)gc3)/threePostiNumber)+"\n");
+					bw3.write(String.valueOf(((float) gc12)
+							/ (oneTwoPostiNumber * 2))
+							+ "\t"
+							+ String.valueOf(((float) gc3) / threePostiNumber)
+							+ "\n");
 				}
 			}
 			bw3.flush();
@@ -87,7 +101,5 @@ public class NeutralityPlot implements Operation {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 }

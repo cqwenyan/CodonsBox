@@ -27,16 +27,7 @@ public class WorkComplete extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		try {
 	private JButton okButton;
-	
-
-	
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	/**
 	 * Create the dialog.

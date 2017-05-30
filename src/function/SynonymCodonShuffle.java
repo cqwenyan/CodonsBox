@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import tool.CleanBreak;
 import tool.RandomizeDiArray;
 import tool.StringToArray;
 import core.MainMenu;
@@ -19,22 +20,20 @@ public class SynonymCodonShuffle implements Operation {
 	public void workNew(String path, String fileName) {
 		MainMenu.RefreshPlus(PulsType.SynonymCodonShuffleType);
 
-		int lineLength = cleanLineBreak(path, fileName);
+		CleanBreak cleanBreak = new CleanBreak();
+		cleanBreak.cleanLineBreak(path, fileName);
+		int lineLength = cleanBreak.GetLineLength();
 		if (!MainMenu.getPlusfield().equals("0")) {
 			int shuffleTimes = Integer.valueOf(MainMenu.getPlusfield());
-			genIterator(path + "tempFile.fasta", path + "SynShuff_"+fileName
-					, lineLength,shuffleTimes);
-
-			File f = new File(path + "tempFile.fasta"); // 输入要删除的文件位置
-			if (f.exists())
-				f.delete();
+			genIterator(path + "tempFile.fasta", path + "SynShuff_" + fileName,
+					lineLength, shuffleTimes);
+			cleanBreak.deleteTempFile(path);
 			new WorkComplete();
-
 		}
 	}
 
 	public static void genIterator(String inputFileName, String outputFileName,
-			int lineLength,int shuffleTimes) {
+			int lineLength, int shuffleTimes) {
 
 		try {
 			FileWriter writer = new FileWriter(outputFileName);
@@ -51,7 +50,7 @@ public class SynonymCodonShuffle implements Operation {
 					int genLength = gene.length();
 					int completeLineNumber = genLength / lineLength;
 					int incompleteLineNumber = genLength % lineLength;
-					String genAfterRandom = core(gene,shuffleTimes);
+					String genAfterRandom = core(gene, shuffleTimes);
 					bw.write(geneName + "\n");
 
 					for (int s = 0; s < completeLineNumber; s++) {
@@ -73,7 +72,7 @@ public class SynonymCodonShuffle implements Operation {
 		}
 	}
 
-	public static String core(String inputSequence,int shuffleTimes) {
+	public static String core(String inputSequence, int shuffleTimes) {
 		StringToArray myStringToArray = new StringToArray();
 		RandomizeDiArray myRandomizeDiArray = new RandomizeDiArray();
 		// 一条基因生成一个密码子数组
@@ -86,45 +85,5 @@ public class SynonymCodonShuffle implements Operation {
 		String resultSequence = myRandomizeDiArray.theShuffleOutput(
 				afterShuffle, mygenArrays);
 		return resultSequence;
-	}
-
-	public static int cleanLineBreak(String path, String inputFileName) {
-		File file = new File(path + inputFileName);
-		int sensor = 0;
-		int lineLength = 0;
-		try {
-			FileWriter rwriter = new FileWriter(path + "tempFile.fasta");
-			BufferedWriter bw = new BufferedWriter(rwriter);
-			String tempStringUpper = null;
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			tempStringUpper = reader.readLine();
-			while (tempStringUpper.contains(">") != true) {
-				tempStringUpper = reader.readLine();
-			}
-			bw.write(tempStringUpper + "\n");
-			// end
-
-			while ((tempStringUpper = reader.readLine()) != null) {
-				if (sensor == 0) {
-					lineLength = tempStringUpper.length();
-					sensor++;
-				}
-				if (tempStringUpper.contains(">")) {
-					bw.write("\n" + tempStringUpper + "\n");
-				} else {
-					if (tempStringUpper.length() >= 65534) {
-						System.out
-								.println("warning,some gene is too long in your FASTA file,and we lost some base of them");
-					}
-					bw.write(tempStringUpper);
-				}
-			}
-			bw.flush();
-			reader.close();
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return lineLength;
 	}
 }

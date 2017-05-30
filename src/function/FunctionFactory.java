@@ -1,23 +1,18 @@
 package function;
 
-
 public class FunctionFactory {
-//	private FunctionFactory(){}
-//	private static FunctionFactory instance = new FunctionFactory();
-//	public static FunctionFactory getFunctionFactory(){
-//		return instance;
-//	}
-//	
-	
-	//,String path,String fileName 
-	public static Operation CreateOperation(String operation){
+
+	public static Operation CreateOperation(String operation) {
 		Operation oper = null;
-		switch(operation){
+		switch (operation) {
 		case "Filter":
 			oper = new Filter();
 			break;
 		case "300":
 			oper = new Longer300();
+			break;
+		case "GC":
+			oper = new GC();
 			break;
 		case "CircosGC":
 			oper = new CircosGC();
@@ -48,7 +43,4 @@ public class FunctionFactory {
 		}
 		return oper;
 	}
-	
-	
-	
 }

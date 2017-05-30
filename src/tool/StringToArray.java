@@ -1,7 +1,7 @@
 package tool;
 
-public class  StringToArray{
-	//将一条基因变成一个密码子数组
+public class StringToArray {
+	// 将一条基因变成一个密码子数组
 	public String[] genArrays(String genString) {
 		int genlength = 0;
 		int codonNumber = 0;
@@ -9,17 +9,14 @@ public class  StringToArray{
 		genlength = genString.length();
 		codonNumber = genlength / 3;
 		String[] genArray = new String[codonNumber];
-		for (int i = 0; i < codonNumber; i++ ) {
-			genArray[i] = genString.substring(i*3, (i + 1)*3);
+		for (int i = 0; i < codonNumber; i++) {
+			genArray[i] = genString.substring(i * 3, (i + 1) * 3);
 		}
 		return genArray;
 	}
 
-	//将一条基因变成一个密码子二维数组
+	// 将一条基因变成一个密码子二维数组
 	public int[][] twoDiArrays(String[] genArray) {
-		// String[] menu = { "Phe", "Leu", "Ser", "Tyr", "Cys", "Pro", "His",
-		// "Gin", "Arg", "Ile", "Thr", "Asn", "Lys", "Val", "Ala", "Asp",
-		// "Glu", "Gly" };
 		int PheCount = 0;
 		int LeuCount = 0;
 		int SerCount = 0;
@@ -130,7 +127,6 @@ public class  StringToArray{
 		int GluCountSec = 0;
 		int GlyCountSec = 0;
 		for (int j = 0; j < genArray.length; j++) {
-			// genArrays[j] = genString.substring(j, j + 3);
 			if (genArray[j].equals("TTT") || genArray[j].equals("TTC")) {
 				twoDiArray[0][j] = 1;
 				twoDiArray[1][PheCountSec++] = j;

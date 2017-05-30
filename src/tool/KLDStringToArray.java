@@ -17,9 +17,6 @@ public class KLDStringToArray {
 
 	// 将一条基因变成一个密码子二维数组
 	public int[][] twoDiArrays(String[] genArray) {
-		// String[] menu = { "Phe", "Leu", "Ser", "Tyr", "Cys", "Pro", "His",
-		// "Gin", "Arg", "Ile", "Thr", "Asn", "Lys", "Val", "Ala", "Asp",
-		// "Glu", "Gly" };
 		int PheCount = 0;
 		int LeuCount = 0;
 		int SerCount = 0;

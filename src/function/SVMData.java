@@ -18,30 +18,34 @@ public class SVMData implements Operation {
 	@Override
 	public void workNew(String path, String fileName) {
 		MainMenu.RefreshPlus(PulsType.SVMLibType);
-		if(!MainMenu.getPlusfield().equals("0")){
+		if (!MainMenu.getPlusfield().equals("0")) {
 			CleanBreak cleanBreak = new CleanBreak();
 			cleanBreak.cleanLineBreak(path, fileName);
-			genIterator(fileName,path,Integer.valueOf(MainMenu.getPlusfield()));
+			genIterator(fileName, path,
+					Integer.valueOf(MainMenu.getPlusfield()));
 			cleanBreak.deleteTempFile(path);
 			new WorkComplete();
 		}
 	}
-	
+
 	private static void genIterator(String inputFileName, String path,
 			int classNumber) {
-		SVMOnlyCodonMaker myStringToArray = SVMOnlyCodonMaker.getStringToArray();
+		SVMOnlyCodonMaker myStringToArray = SVMOnlyCodonMaker
+				.getStringToArray();
 		try {
-			FileWriter writer = new FileWriter(path+"SVMcodon_"+inputFileName);
+			FileWriter writer = new FileWriter(path + "SVMcodon_"
+					+ inputFileName);
 			BufferedWriter bw = new BufferedWriter(writer);
 			String geneName = null;
-			File file = new File(path+"tempFile.fasta");
+			File file = new File(path + "tempFile.fasta");
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((geneName = reader.readLine()) != null) {
 				if (geneName.contains(">")) {
 					String gene = reader.readLine();
 					myStringToArray.initArrays();
 					String[] mygenArrays = myStringToArray.genArrays(gene);
-					bw.write(myStringToArray.resultArrays(mygenArrays,classNumber) + "\n");
+					bw.write(myStringToArray.resultArrays(mygenArrays,
+							classNumber) + "\n");
 				}
 			}
 			bw.flush();
