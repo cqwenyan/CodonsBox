@@ -17,11 +17,9 @@ public class CircosGC implements Operation {
 		MainMenu.RefreshPlus(PulsType.CircosGCtype);
 
 		if (!MainMenu.getPlusfield().equals("0")) {
-			// CleanBreak cleanBreak = new CleanBreak();
-			// cleanBreak.cleanLineBreak(path, fileName);
+			
 			genIterator(path, fileName,
 					Integer.parseInt(MainMenu.getPlusfield()), "CodonsBoxGC");
-			// cleanBreak.deleteTempFile(path, fileName);
 			new WorkComplete();
 		}
 	}
